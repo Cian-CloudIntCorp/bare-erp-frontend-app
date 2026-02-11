@@ -1,4 +1,4 @@
-// app.js - Enterprise Module Loader & Interaction Controller
+// app.js - Enterprise Module Loader & Interactions
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const session = window.SecurityService.checkAuth();
         if (!session) return; 
         
-        // Update User Name in Header
         const userDisplay = document.getElementById('user-name');
         if (userDisplay && session.name) userDisplay.textContent = session.name;
     }
@@ -24,15 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeSidebar = document.getElementById(`${moduleName}-nav`);
         if (activeSidebar) activeSidebar.classList.add('active');
         
-        const activeHeader = document.querySelector(`.header-nav a[data-module='${moduleName}']`);
-        if (activeHeader) activeHeader.classList.add('active');
-
-        // Loading State
+        // Show Loading
         appContent.innerHTML = `
             <div class="flex items-center justify-center h-full text-gray-500">
                 <div class="text-center">
-                    <h2 class="text-2xl font-bold mb-4 text-blue-500">Loading ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}...</h2>
-                    <p>Fetching enterprise data...</p>
+                    <h2 class="text-2xl font-bold mb-4 text-blue-500">Loading...</h2>
                 </div>
             </div>`;
 
@@ -42,20 +37,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const html = await response.text();
             appContent.innerHTML = html;
         } catch (error) {
-            console.error('Error loading module:', error);
-            appContent.innerHTML = `<div class="p-10 text-center text-red-400">Error loading module. Please check console.</div>`;
+            appContent.innerHTML = `<div class="p-10 text-center text-red-400">Error loading module.</div>`;
         }
     }
 
-    // --- 3. EVENT LISTENERS (Navigation) ---
+    // --- 3. EVENT LISTENERS ---
     function handleNavigation(e, element) {
         e.preventDefault();
         const moduleName = element.dataset.module;
-        
-        // Check Permissions if SecurityService is active
+        // Security Check
         if (window.SecurityService && element.dataset.permission) {
             if (!window.SecurityService.hasPermission(element.dataset.permission)) {
-                alert('⛔ Access Denied: Insufficient Permissions');
+                alert('⛔ Access Denied');
                 return;
             }
         }
@@ -65,34 +58,29 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebarItems.forEach(item => item.addEventListener('click', (e) => handleNavigation(e, item)));
     headerLinks.forEach(link => link.addEventListener('click', (e) => handleNavigation(e, link)));
 
-    // --- 4. GLOBAL BUTTON INTERACTIONS (The Fix) ---
+    // --- 4. BUTTON INTERACTIONS (The Fix) ---
     document.addEventListener('click', (e) => {
+        // Find the closest button if user clicked an icon inside a button
         const btn = e.target.closest('button');
         if (!btn) return;
 
-        // Logout
-        if (btn.id === 'logout-btn' || btn.innerText.includes('Logout')) {
-            if(confirm('Are you sure you want to log out?')) window.SecurityService.logout();
+        const text = btn.innerText.trim();
+
+        // Logout Logic
+        if (btn.id === 'logout-btn' || text.includes('Logout')) {
+            if(confirm('Log out of Enterprise ERP?')) window.SecurityService.logout();
             return;
         }
 
-        // Action Buttons (Mock Logic)
-        const text = btn.innerText.trim();
-        
-        if (text.includes('Create Invoice')) {
-            alert('🧾 INVOICE WIZARD\n\nStarting new invoice generation workflow...');
-        } else if (text.includes('Add Employee')) {
-            alert('👤 HR ONBOARDING\n\nOpening new employee registration form...');
-        } else if (text.includes('Export')) {
-            alert('📊 DATA EXPORT\n\nDownloading CSV report...');
-        } else if (text.includes('Settings')) {
-            alert('⚙️ SYSTEM SETTINGS\n\nGlobal configuration panel.');
-        } else if (text.includes('Send Reminders')) {
-            alert('📧 EMAIL JOB\n\nSending payment reminders to 5 clients...');
-        }
+        // Mock Action Logic
+        if (text.includes('Create Invoice')) alert('🧾 STARTING INVOICE WIZARD...\n\n(This would open a modal in a real app)');
+        else if (text.includes('Add Employee')) alert('👤 OPENING HR FORM...\n\n(New Employee Wizard)');
+        else if (text.includes('Export')) alert('📊 DOWNLOADING REPORT...\n\n(Generating CSV...)');
+        else if (text.includes('Settings')) alert('⚙️ OPENING SETTINGS PANEL');
+        else if (text.includes('Send Reminders')) alert('📧 SENDING EMAILS...\n\n(Reminders sent to 5 clients)');
     });
 
     // --- 5. INITIAL LOAD ---
-    window.loadModule = loadModule; // Expose for search
+    window.loadModule = loadModule;
     loadModule('hr');
 });
