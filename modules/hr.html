@@ -1,0 +1,106 @@
+<div class="p-8 card">
+    <div class="content-header mb-6">
+        <div>
+            <h1 class="content-title text-glow-blue">Employee Records</h1>
+            <p class="content-subtitle">Manage team profiles, roles, and performance data</p>
+        </div>
+        <div class="flex space-x-2">
+            <button class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10.5 3.75a.75.75 0 0 1 .75.75v8.67l3.22-3.22a.75.75 0 0 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.22 3.22V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" /><path fill-rule="evenodd" d="M3.75 12a.75.75 0 0 1 .75.75v5.515c0 1.334.818 2.545 2.054 3.068l.74.354a3.75 3.75 0 0 0 3.206.017l.74-.354c1.236-.523 2.054-1.734 2.054-3.068v-5.515a.75.75 0 0 1 1.5 0v5.515c0 1.334.818 2.545 2.054 3.068l.74.354a3.75 3.75 0 0 0 3.206-.017l.74-.354c1.236-.523 2.054-1.734 2.054-3.068V12.75a.75.75 0 0 1 1.5 0v.772a2.25 2.25 0 0 1-1.055 1.971l-.74.354a2.25 2.25 0 0 0-1.388 2.032v4.28c0 1.447-1.113 2.617-2.538 2.756l-.676.058a3.75 3.75 0 0 0-2.352.722l-.74-.354a3.75 3.75 0 0 0-3.206-.017l-.74.354a3.75 3.75 0 0 0-2.352-.722l-.676-.058c-1.425-.139-2.538-1.309-2.538-2.756v-4.28a2.25 2.25 0 0 1-1.055-1.971l-.74-.354A2.25 2.25 0 0 1 3 12.75v-0.772a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" /></svg>Export</button>
+            <button class="btn btn-primary button-glow-blue" id="add-employee-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M4.5 5.653c0-1.427.626-2.696 1.625-3.535a3.75 3.75 0 0 1 3.027-0.75H13.5a3.75 3.75 0 0 1 3.027.75c.999.839 1.625 2.108 1.625 3.535V18a3.75 3.75 0 0 1-3.027 3.535L13.5 21.75a3.75 3.75 0 0 1-3.027-.75c-.999-.839-1.625-2.108-1.625-3.535V5.653Zm4.75.75a.75.75 0 0 1 .75-.75H13.5a.75.75 0 0 1 .75.75v1.158c0 .517.369.962.875 1.079l.74.133c.456.082.93.127 1.42.127h3.456a.75.75 0 0 1 .75.75v1.634a.75.75 0 0 1-.75.75H4.5a.75.75 0 0 1-.75-.75V6.403Z" clip-rule="evenodd" /><path d="M4.875 18.75a.75.75 0 0 0 .75.75h13.5a.75.75 0 0 0 .75-.75v-1.158c0-.517-.369-.962-.875-1.079l-.74-.133a.75.75 0 0 1-.425-.515V11.75a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v4.51c0 .517.369.962.875 1.079l.74.133c.456.082.93.127 1.42.127h3.456a.75.75 0 0 0 .75-.75V18Z" /></svg>Add Employee</button>
+        </div>
+    </div>
+
+    <div class="mb-6">
+        <h3 class="text-xl font-bold text-blue-400 mb-3">Employee Directory</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="hr-employee-list">
+            <!-- Employee Cards will be loaded here -->
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="w-10 h-10 rounded-full mr-4 border-2 border-blue-500">
+                        <div>
+                            <h4 class="text-lg font-semibold text-blue-400">Sarah Anderson</h4>
+                            <p class="text-sm text-gray-400">Senior Software Engineer</p>
+                        </div>
+                    </div>
+                    <span class="status-badge active">Active</span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <p class="text-sm text-gray-400 mb-1"><span>Department:</span> <span class="text-gray-300 utility-text">Engineering</span></p>
+                    <p class="text-sm text-gray-400 mb-1"><span>Employee ID:</span> <span class="text-gray-300 utility-text">EMP-2847</span></p>
+                    <p class="text-sm text-gray-400"><span>Location:</span> <span class="text-gray-300 utility-text">San Francisco</span></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="w-10 h-10 rounded-full mr-4 border-2 border-yellow-500">
+                        <div>
+                            <h4 class="text-lg font-semibold text-yellow-400">Marcus Bell</h4>
+                            <p class="text-sm text-gray-400">Product Manager</p>
+                        </div>
+                    </div>
+                    <span class="status-badge active">Active</span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <p class="text-sm text-gray-400 mb-1"><span>Department:</span> <span class="text-gray-300 utility-text">Product</span></p>
+                    <p class="text-sm text-gray-400 mb-1"><span>Employee ID:</span> <span class="text-gray-300 utility-text">EMP-9103</span></p>
+                    <p class="text-sm text-gray-400"><span>Location:</span> <span class="text-gray-300 utility-text">New York</span></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="w-10 h-10 rounded-full mr-4 border-2 border-purple-500">
+                        <div>
+                            <h4 class="text-lg font-semibold text-purple-500">Jessica Chen</h4>
+                            <p class="text-sm text-gray-400">Lead UX Designer</p>
+                        </div>
+                    </div>
+                    <span class="status-badge pending">On Leave</span>
+                </div>
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <p class="text-sm text-gray-400 mb-1"><span>Department:</span> <span class="text-gray-300 utility-text">Design</span></p>
+                    <p class="text-sm text-gray-400 mb-1"><span>Employee ID:</span> <span class="text-gray-300 utility-text">EMP-5521</span></p>
+                    <p class="text-sm text-gray-400"><span>Location:</span> <span class="text-gray-300 utility-text">London</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-6">
+        <h3 class="text-xl font-bold text-blue-400 mb-3">Performance Reviews</h3>
+        <div class="card">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Last Review</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="flex items-center gap-2"><img src="https://via.placeholder.com/32" alt="Avatar" class="w-8 h-8 rounded-full border border-blue-500">Sarah Anderson</td>
+                        <td>Engineering</td>
+                        <td><span class="status-badge active">Active</span></td>
+                        <td>2023-12-15</td>
+                    </tr>
+                    <tr>
+                        <td class="flex items-center gap-2"><img src="https://via.placeholder.com/32" alt="Avatar" class="w-8 h-8 rounded-full border border-yellow-500">Marcus Bell</td>
+                        <td>Product</td>
+                        <td><span class="status-badge active">Active</span></td>
+                        <td>2023-11-01</td>
+                    </tr>
+                    <tr>
+                        <td class="flex items-center gap-2"><img src="https://via.placeholder.com/32" alt="Avatar" class="w-8 h-8 rounded-full border border-purple-500">Jessica Chen</td>
+                        <td>Design</td>
+                        <td><span class="status-badge pending">On Leave</span></td>
+                        <td>2023-09-20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bare-ERP Frontend</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Variables for Design System --- */
+        :root {
+            --primary-blue: #3B82F6;
+            --primary-yellow: #eab308;
+            --primary-purple: #a78bfa;
+            --bg-dark: #020617;
+            --bg-darker: #0f172a;
+            --bg-card: rgba(17, 24, 39, 0.6);
+            --text-primary: #e5e7eb;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --border-primary: rgba(59, 130, 246, 0.2);
+            --border-hover: rgba(59, 130, 246, 0.5);
+            --spacing-card: 2rem;
+            --radius-lg: 0.75rem;
+            --radius-md: 0.5rem;
+        }
+
+        /* --- Global Styles --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-secondary);
+            overflow-x: hidden;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .utility-text {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* --- Glow & Effect Styles --- */
+        .text-glow-blue {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.6), 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+        .text-glow-yellow {
+            text-shadow: 0 0 10px rgba(234, 179, 8, 0.6), 0 0 20px rgba(234, 179, 8, 0.4);
+        }
+        .button-glow-blue {
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        .button-glow-blue:hover {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px);
+        }
+        .card {
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-card);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+        }
+        .card.gradient-yellow {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), var(--bg-card));
+        }
+
+        /* --- Navigation & Layout Styles --- */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-darker);
+            backdrop-filter: blur(15px);
+            padding: 2rem 1rem;
+            border-right: 1px solid var(--border-primary);
+            transition: width 0.3s ease;
+            flex-shrink: 0;
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            margin: 0.25rem 0;
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .sidebar-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary-blue);
+        }
+        .sidebar-item.active {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+        .sidebar-title {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.5rem 0.75rem;
+        }
+        .app-content {
+            flex-grow: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .header-nav a {
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+        .header-nav a:hover {
+            color: var(--primary-blue);
+        }
+        .header-nav a.active {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background-clip: text;
+            -webkit-background-clip: text;
+            background-image: linear-gradient(to right, var(--primary-blue), var(--primary-yellow));
+            color: transparent;
+            margin-bottom: 2rem;
+        }
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .content-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+        }
+        .content-subtitle {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        .status-badge {
+            display: inline-block;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            border: 1px solid;
+        }
+        .status-badge.active {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+        .status-badge.pending {
+            background-color: rgba(234, 179, 8, 0.1);
+            color: var(--primary-yellow);
+            border-color: rgba(234, 179, 8, 0.3);
+        }
+        .status-badge.inactive {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.6);
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden bg-black text-white">
+
+    <aside class="sidebar">
+        <div class="flex items-center justify-center mb-8 p-4">
+            <h1 class="text-2xl font-extrabold text-glow-blue">Bare-ERP</h1>
+        </div>
+        <nav>
+            <div class="sidebar-title">Modules</div>
+            <div id="hr-nav" class="sidebar-item" data-module="hr">HR</div>
+            <div id="finance-nav" class="sidebar-item" data-module="finance">Finance</div>
+            <div id="crm-nav" class="sidebar-item" data-module="crm">CRM</div>
+        </nav>
+    </aside>
+
+    <div class="flex flex-col flex-grow">
+        <header class="header flex items-center justify-between py-4 px-6 border-b border-slate-800 bg-black/50 backdrop-blur-sm">
+            <div class="header-nav">
+                <a href="#hr" data-module="hr">HR</a>
+                <a href="#finance" data-module="finance">Finance</a>
+                <a href="#crm" data-module="crm">CRM</a>
+            </div>
+            <div class="text-muted utility-text">Version 1.0</div>
+        </header>
+
+        <main class="app-content" id="app-content">
+            <!-- Content will be loaded here -->
+            <div class="flex items-center justify-center h-full text-gray-500">
+                <div class="text-center">
+                    <h2 class="section-title mb-4">Loading...</h2>
+                    <p>Initializing ERP interface.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
