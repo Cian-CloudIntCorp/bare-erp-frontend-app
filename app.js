@@ -1,94 +1,98 @@
-// app.js - Enterprise Module Loader
+// app.js - Enterprise Module Loader & Interaction Controller
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Removed SecurityService related code as the service is not implemented.
-    // If a security service is implemented later, it can be re-integrated here.
+    
+    // --- 1. SECURITY CHECK ---
+    if (window.SecurityService) {
+        const session = window.SecurityService.checkAuth();
+        if (!session) return; 
+        
+        // Update User Name in Header
+        const userDisplay = document.getElementById('user-name');
+        if (userDisplay && session.name) userDisplay.textContent = session.name;
+    }
 
-    // --- SELECTORS ---
+    // --- 2. CORE NAVIGATION ---
     const sidebarItems = document.querySelectorAll('.sidebar-item');
     const headerLinks = document.querySelectorAll('.header-nav a');
     const appContent = document.getElementById('app-content');
 
-    // --- CORE LOADING FUNCTION ---
     async function loadModule(moduleName) {
-        // UI: Remove active class from all sidebar items and header links
-        document.querySelectorAll('.sidebar-item, .header-nav a').forEach(item => {
-            item.classList.remove('active');
-        });
-
-        // UI: Add active class to Sidebar Item (if found)
+        // UI Updates
+        document.querySelectorAll('.sidebar-item, .header-nav a').forEach(item => item.classList.remove('active'));
+        
         const activeSidebar = document.getElementById(`${moduleName}-nav`);
-        if (activeSidebar) {
-            activeSidebar.classList.add('active');
-        }
-
-        // UI: Add active class to Header Link (if found)
+        if (activeSidebar) activeSidebar.classList.add('active');
+        
         const activeHeader = document.querySelector(`.header-nav a[data-module='${moduleName}']`);
-        if (activeHeader) {
-            activeHeader.classList.add('active');
-        }
+        if (activeHeader) activeHeader.classList.add('active');
 
-        // UI: Show loading state
+        // Loading State
         appContent.innerHTML = `
             <div class="flex items-center justify-center h-full text-gray-500">
                 <div class="text-center">
-                    <h2 class="section-title mb-4">Loading ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}...</h2>
-                    <div class="loading-spinner"></div>
-                    <p>Fetching module data.</p>
+                    <h2 class="text-2xl font-bold mb-4 text-blue-500">Loading ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}...</h2>
+                    <p>Fetching enterprise data...</p>
                 </div>
-            </div>
-        `;
+            </div>`;
 
         try {
-            // Fetch logic: Correctly points to modules/ folder.
             const response = await fetch(`modules/${moduleName}.html`);
-            
-            if (!response.ok) {
-                // Handle HTTP errors (e.g., 404 Not Found)
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const html = await response.text();
             appContent.innerHTML = html;
         } catch (error) {
             console.error('Error loading module:', error);
-            appContent.innerHTML = `
-                <div class="flex items-center justify-center h-full text-red-500">
-                    <div class="text-center">
-                        <h2 class="section-title mb-4">Error</h2>
-                        <p>Could not load the ${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)} module.</p>
-                        <p class="text-sm mt-2 text-gray-400">Please ensure '${moduleName}.html' exists in the 'modules' folder and is accessible.</p>
-                    </div>
-                </div>
-            `;
+            appContent.innerHTML = `<div class="p-10 text-center text-red-400">Error loading module. Please check console.</div>`;
         }
     }
 
-    // --- NAVIGATION HANDLER ---
+    // --- 3. EVENT LISTENERS (Navigation) ---
     function handleNavigation(e, element) {
         e.preventDefault();
         const moduleName = element.dataset.module;
         
-        if (!moduleName) {
-            console.warn('Navigation element missing data-module attribute:', element);
-            return;
+        // Check Permissions if SecurityService is active
+        if (window.SecurityService && element.dataset.permission) {
+            if (!window.SecurityService.hasPermission(element.dataset.permission)) {
+                alert('⛔ Access Denied: Insufficient Permissions');
+                return;
+            }
         }
-
         loadModule(moduleName);
     }
 
-    // --- EVENT LISTENERS ---
-    sidebarItems.forEach(item => {
-        item.addEventListener('click', (e) => handleNavigation(e, item));
+    sidebarItems.forEach(item => item.addEventListener('click', (e) => handleNavigation(e, item)));
+    headerLinks.forEach(link => link.addEventListener('click', (e) => handleNavigation(e, link)));
+
+    // --- 4. GLOBAL BUTTON INTERACTIONS (The Fix) ---
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+
+        // Logout
+        if (btn.id === 'logout-btn' || btn.innerText.includes('Logout')) {
+            if(confirm('Are you sure you want to log out?')) window.SecurityService.logout();
+            return;
+        }
+
+        // Action Buttons (Mock Logic)
+        const text = btn.innerText.trim();
+        
+        if (text.includes('Create Invoice')) {
+            alert('🧾 INVOICE WIZARD\n\nStarting new invoice generation workflow...');
+        } else if (text.includes('Add Employee')) {
+            alert('👤 HR ONBOARDING\n\nOpening new employee registration form...');
+        } else if (text.includes('Export')) {
+            alert('📊 DATA EXPORT\n\nDownloading CSV report...');
+        } else if (text.includes('Settings')) {
+            alert('⚙️ SYSTEM SETTINGS\n\nGlobal configuration panel.');
+        } else if (text.includes('Send Reminders')) {
+            alert('📧 EMAIL JOB\n\nSending payment reminders to 5 clients...');
+        }
     });
 
-    headerLinks.forEach(link => {
-        link.addEventListener('click', (e) => handleNavigation(e, link));
-    });
-
-    // --- EXPOSE TO WINDOW (For potential external interactions) ---
-    window.loadModule = loadModule;
-
-    // --- INITIAL LOAD ---
-    // Load 'hr' by default on first page load.
+    // --- 5. INITIAL LOAD ---
+    window.loadModule = loadModule; // Expose for search
     loadModule('hr');
 });
