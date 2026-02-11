@@ -1,16 +1,390 @@
-<div class="p-8 card">
-    <h2 class="section-title mb-6">CRM</h2>
-    <p class="text-gray-300 text-lg mb-6">Customer Relationship Management and Sales Pipeline.</p>
+<!-- ============================================
+     CRM MODULE: LEAD TRACKING
+     CONTENT SLOT IMPLEMENTATION
+     ============================================
+     This content replaces the #dynamic-content-slot
+     in the master layout template.
+     Features split-pane layout: Contact List + Detail View
+     ============================================ -->
 
-    <div class="mb-6">
-        <h3 class="text-xl font-bold text-green-400 mb-3">Lead Pipeline</h3>
-        <p class="text-gray-400 text-sm">Track sales leads and conversion rates.</p>
-        <div id="crm-pipeline" class="mt-4 text-gray-500 utility-text text-xs">Loading pipeline data...</div>
-    </div>
-
-    <div class="mb-6">
-        <h3 class="text-xl font-bold text-green-400 mb-3">Customer Activities</h3>
-        <p class="text-gray-400 text-sm">Recent interactions and tickets.</p>
-        <div id="crm-activities" class="mt-4 text-gray-500 utility-text text-xs">Loading activity logs...</div>
+<div class="content-header">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h1 class="content-title text-glow-blue">Lead Management</h1>
+            <p class="content-subtitle">Track contacts, deals, and customer interactions</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+            <button class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                </svg>
+                Filter
+            </button>
+            <button class="btn btn-primary button-glow-blue">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Add Lead
+            </button>
+        </div>
     </div>
 </div>
+
+<!-- Split Pane Layout: Contact List + Detail View -->
+<div style="display: grid; grid-template-columns: 400px 1fr; gap: 2rem; height: calc(100vh - 300px);">
+    
+    <!-- Left Pane: Contact List -->
+    <div style="display: flex; flex-direction: column; height: 100%;">
+        
+        <!-- Pipeline Status Tabs -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; background: rgba(31, 41, 55, 0.4); padding: 0.5rem; border-radius: 0.5rem; border: 1px solid var(--border-primary);">
+            <button class="btn btn-primary button-glow-blue" style="flex: 1; padding: 0.5rem; font-size: 0.75rem;">
+                All (47)
+            </button>
+            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem; font-size: 0.75rem;">
+                New (12)
+            </button>
+            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem; font-size: 0.75rem;">
+                Qualified (18)
+            </button>
+            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem; font-size: 0.75rem;">
+                Won (17)
+            </button>
+        </div>
+        
+        <!-- Contact Cards - Scrollable List -->
+        <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; padding-right: 0.5rem;">
+            
+            <!-- Contact Card 1 - Selected -->
+            <div class="erp-card" style="border-color: var(--primary-blue); box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); cursor: pointer;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+                    <div style="flex: 1;">
+                        <h3 style="color: var(--text-primary); font-weight: 700; margin: 0 0 0.25rem 0; font-size: 1rem;">Jennifer Martinez</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem; margin: 0 0 0.5rem 0;">VP of Engineering @ TechCorp</p>
+                    </div>
+                    <span class="status-badge active">Hot</span>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Deal Value</div>
+                        <div style="color: var(--text-primary); font-weight: 700; font-size: 0.875rem;">$125,000</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Stage</div>
+                        <div style="color: var(--primary-purple); font-weight: 600; font-size: 0.875rem;">Proposal</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Last contact: 2 hours ago
+                </div>
+            </div>
+            
+            <!-- Contact Card 2 -->
+            <div class="erp-card" style="cursor: pointer; opacity: 0.85;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+                    <div style="flex: 1;">
+                        <h3 style="color: var(--text-primary); font-weight: 700; margin: 0 0 0.25rem 0; font-size: 1rem;">David Kim</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem; margin: 0 0 0.5rem 0;">CTO @ StartupXYZ</p>
+                    </div>
+                    <span class="status-badge pending">Warm</span>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Deal Value</div>
+                        <div style="color: var(--text-primary); font-weight: 700; font-size: 0.875rem;">$85,000</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Stage</div>
+                        <div style="color: var(--primary-purple); font-weight: 600; font-size: 0.875rem;">Discovery</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Last contact: 1 day ago
+                </div>
+            </div>
+            
+            <!-- Contact Card 3 -->
+            <div class="erp-card" style="cursor: pointer; opacity: 0.85;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+                    <div style="flex: 1;">
+                        <h3 style="color: var(--text-primary); font-weight: 700; margin: 0 0 0.25rem 0; font-size: 1rem;">Sarah Johnson</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem; margin: 0 0 0.5rem 0;">Director @ Enterprise Co</p>
+                    </div>
+                    <span class="status-badge active">Hot</span>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Deal Value</div>
+                        <div style="color: var(--text-primary); font-weight: 700; font-size: 0.875rem;">$240,000</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Stage</div>
+                        <div style="color: var(--primary-purple); font-weight: 600; font-size: 0.875rem;">Negotiation</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Last contact: 3 hours ago
+                </div>
+            </div>
+            
+            <!-- Contact Card 4 -->
+            <div class="erp-card" style="cursor: pointer; opacity: 0.85;">
+                <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 1rem;">
+                    <div style="flex: 1;">
+                        <h3 style="color: var(--text-primary); font-weight: 700; margin: 0 0 0.25rem 0; font-size: 1rem;">Michael Chen</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem; margin: 0 0 0.5rem 0;">Founder @ InnovateLab</p>
+                    </div>
+                    <span class="status-badge inactive">Cold</span>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Deal Value</div>
+                        <div style="color: var(--text-primary); font-weight: 700; font-size: 0.875rem;">$45,000</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Stage</div>
+                        <div style="color: var(--primary-purple); font-weight: 600; font-size: 0.875rem;">Initial</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Last contact: 2 weeks ago
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- Right Pane: Contact Detail & Activity Timeline -->
+    <div style="display: flex; flex-direction: column; gap: 2rem; overflow-y: auto; padding-right: 0.5rem;">
+        
+        <!-- Contact Header Card -->
+        <div class="erp-card">
+            <div style="display: flex; gap: 2rem; align-items: start;">
+                <!-- Avatar -->
+                <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple)); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; color: white; flex-shrink: 0; box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);">
+                    JM
+                </div>
+                
+                <!-- Contact Info -->
+                <div style="flex: 1;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h2 style="color: var(--text-primary); font-weight: 700; margin: 0 0 0.25rem 0; font-size: 1.5rem;">Jennifer Martinez</h2>
+                            <p style="color: var(--primary-purple); font-size: 1rem; margin: 0 0 0.75rem 0; font-weight: 600;">VP of Engineering @ TechCorp</p>
+                            <span class="status-badge active">Hot Lead</span>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary" style="padding: 0.5rem;">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                            </button>
+                            <button class="btn btn-primary button-glow-blue" style="padding: 0.5rem 1rem;">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                Send Email
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Details Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em;">Email</div>
+                            <div style="color: var(--primary-blue); font-size: 0.875rem; font-weight: 600;">j.martinez@techcorp.com</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em;">Phone</div>
+                            <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 600;">+1 (555) 123-4567</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em;">Location</div>
+                            <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 600;">San Francisco, CA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Deal Information Card -->
+        <div class="erp-card">
+            <h3 style="color: var(--primary-purple); font-weight: 700; margin: 0 0 1.5rem 0; font-size: 1.125rem;">
+                Deal Information
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Deal Value</div>
+                    <div style="color: var(--text-primary); font-weight: 800; font-size: 1.75rem;">$125,000</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Expected Close Date</div>
+                    <div style="color: var(--text-primary); font-weight: 700; font-size: 1rem;">March 15, 2026</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Pipeline Stage</div>
+                    <div style="color: var(--primary-purple); font-weight: 700; font-size: 1rem;">Proposal Sent</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Probability</div>
+                    <div style="color: #4ade80; font-weight: 700; font-size: 1rem;">75%</div>
+                </div>
+            </div>
+            
+            <!-- Pipeline Progress Bar -->
+            <div style="margin-top: 2rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                    <span style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 600;">Pipeline Progress</span>
+                    <span style="font-size: 0.875rem; color: var(--primary-blue); font-weight: 700;">Stage 3 of 5</span>
+                </div>
+                <div style="height: 8px; background: rgba(31, 41, 55, 0.6); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 60%; height: 100%; background: linear-gradient(90deg, var(--primary-blue), var(--primary-purple)); box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 0.75rem; font-size: 0.75rem;">
+                    <span style="color: var(--text-muted);">Initial Contact</span>
+                    <span style="color: var(--text-muted);">Discovery</span>
+                    <span style="color: var(--primary-blue); font-weight: 600;">Proposal</span>
+                    <span style="color: var(--text-muted);">Negotiation</span>
+                    <span style="color: var(--text-muted);">Closed Won</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Activity Timeline Card -->
+        <div class="erp-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="color: var(--primary-purple); font-weight: 700; margin: 0; font-size: 1.125rem;">
+                    Activity Timeline
+                </h3>
+                <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.5rem 1rem;">
+                    Add Note
+                </button>
+            </div>
+            
+            <!-- Timeline Items -->
+            <div style="position: relative; padding-left: 2rem;">
+                <!-- Timeline Line -->
+                <div style="position: absolute; left: -1.5rem; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--primary-blue), transparent);"></div>
+                
+                <!-- Timeline Item 1 -->
+                <div style="position: relative; margin-bottom: 2rem;">
+                    <div style="position: absolute; left: -1.5rem; width: 12px; height: 12px; background: var(--primary-blue); border-radius: 50%; border: 2px solid var(--bg-dark); box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);"></div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-primary); font-weight: 600; font-size: 0.875rem;">📧 Email: Proposal Sent</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">2 hours ago</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">
+                            Sent comprehensive proposal including pricing, timeline, and technical implementation details. Awaiting feedback on Phase 2 deliverables.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div style="position: relative; margin-bottom: 2rem;">
+                    <div style="position: absolute; left: -1.5rem; width: 12px; height: 12px; background: var(--primary-yellow); border-radius: 50%; border: 2px solid var(--bg-dark); box-shadow: 0 0 10px rgba(234, 179, 8, 0.6);"></div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-primary); font-weight: 600; font-size: 0.875rem;">📞 Call: Discovery Meeting</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">1 day ago</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">
+                            45-minute call discussing technical requirements and integration needs. Jennifer confirmed budget approval and introduced DevOps lead.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div style="position: relative; margin-bottom: 2rem;">
+                    <div style="position: absolute; left: -1.5rem; width: 12px; height: 12px; background: var(--primary-purple); border-radius: 50%; border: 2px solid var(--bg-dark);"></div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-primary); font-weight: 600; font-size: 0.875rem;">📝 Note: Demo Scheduled</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">3 days ago</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">
+                            Scheduled product demo for Feb 18th with engineering team. Prepared custom use cases based on their tech stack (React, Node.js, AWS).
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 4 -->
+                <div style="position: relative; margin-bottom: 2rem;">
+                    <div style="position: absolute; left: -1.5rem; width: 12px; height: 12px; background: #4ade80; border-radius: 50%; border: 2px solid var(--bg-dark);"></div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-primary); font-weight: 600; font-size: 0.875rem;">📧 Email: Initial Outreach</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">1 week ago</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">
+                            First contact via LinkedIn. Jennifer expressed interest in improving their CI/CD pipeline and requested more information.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 5 -->
+                <div style="position: relative;">
+                    <div style="position: absolute; left: -1.5rem; width: 12px; height: 12px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; border: 2px solid var(--bg-dark);"></div>
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-primary); font-weight: 600; font-size: 0.875rem;">🎯 Lead Created</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">2 weeks ago</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">
+                            Lead captured from webinar "Modern DevOps Strategies". Downloaded whitepaper on container orchestration.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Next Steps Card -->
+        <div class="erp-card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(17, 24, 39, 0.6));">
+            <h3 style="color: var(--primary-purple); font-weight: 700; margin: 0 0 1.5rem 0; font-size: 1.125rem;">
+                📋 Next Steps
+            </h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(59, 130, 246, 0.1); border-left: 3px solid var(--primary-blue); border-radius: 0.5rem;">
+                    <input type="checkbox" style="margin-top: 0.25rem;">
+                    <div style="flex: 1;">
+                        <div style="color: var(--text-primary); font-weight: 600; font-size: 0.875rem; margin-bottom: 0.25rem;">Follow up on proposal</div>
+                        <div style="color: var(--text-muted); font-size: 0.75rem;">Due: Feb 13, 2026 • Assigned to: You</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(234, 179, 8, 0.05); border-left: 3px solid var(--primary-yellow); border-radius: 0.5rem;">
+                    <input type="checkbox" style="margin-top: 0.25rem;">
+                    <div style="flex: 1;">
+                        <div style="color: var(--text-primary); font-weight: 600; font-size: 0.875rem; margin-bottom: 0.25rem;">Schedule contract review</div>
+                        <div style="color: var(--text-muted); font-size: 0.75rem;">Due: Feb 18, 2026 • Assigned to: Legal Team</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; padding: 1rem; background: rgba(147, 51, 234, 0.05); border-left: 3px solid var(--primary-purple); border-radius: 0.5rem;">
+                    <input type="checkbox" style="margin-top: 0.25rem;">
+                    <div style="flex: 1;">
+                        <div style="color: var(--text-primary); font-weight: 600; font-size: 0.875rem; margin-bottom: 0.25rem;">Prepare technical demo</div>
+                        <div style="color: var(--text-muted); font-size: 0.75rem;">Due: Feb 17, 2026 • Assigned to: Engineering</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+
+<style>
+    /* CRM Module Specific Styles - Extends Design System */
+    .erp-card:hover:not(:first-child) {
+        opacity: 1 !important;
+    }
+</style>
