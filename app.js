@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeSidebar = document.getElementById(`${moduleName}-nav`);
         if (activeSidebar) activeSidebar.classList.add('active');
         
-        // Show Loading
+        const activeHeader = document.querySelector(`.header-nav a[data-module='${moduleName}']`);
+        if (activeHeader) activeHeader.classList.add('active');
+
+        // Loading State
         appContent.innerHTML = `
             <div class="flex items-center justify-center h-full text-gray-500">
                 <div class="text-center">
@@ -72,9 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Mock Action Logic
+        // Action Buttons (Mock Logic)
         if (text.includes('Create Invoice')) alert('🧾 STARTING INVOICE WIZARD...\n\n(This would open a modal in a real app)');
         else if (text.includes('Add Employee')) alert('👤 OPENING HR FORM...\n\n(New Employee Wizard)');
+        else if (text.includes('Add Lead')) alert('🚀 NEW LEAD ENTRY...\n\n(CRM Contact Form)'); // <--- FIXED THIS LINE
         else if (text.includes('Export')) alert('📊 DOWNLOADING REPORT...\n\n(Generating CSV...)');
         else if (text.includes('Settings')) alert('⚙️ OPENING SETTINGS PANEL');
         else if (text.includes('Send Reminders')) alert('📧 SENDING EMAILS...\n\n(Reminders sent to 5 clients)');
