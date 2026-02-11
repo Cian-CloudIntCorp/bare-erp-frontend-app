@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bare-ERP - Secure Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #3B82F6;
+            --primary-yellow: #eab308;
+            --bg-dark: #020617;
+            --bg-darker: #0f172a;
+            --text-primary: #e5e7eb;
+            --border-primary: rgba(59, 130, 246, 0.2);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #020617, #0f172a);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-card {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-primary);
+            border-radius: 1rem;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        .text-glow-blue {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.6), 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .input-field {
+            background: rgba(31, 41, 55, 0.6);
+            border: 1px solid var(--border-primary);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn-login {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.875rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login:hover {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-glow-blue mb-2">Bare-ERP<sup>⁷</sup></h1>
+            <p class="text-gray-400 text-sm" style="font-family: 'Courier New', monospace;">ENTERPRISE FRAMEWORK</p>
+        </div>
+        
+        <div id="error-message" class="error-message"></div>
+        
+        <form id="login-form">
+            <div class="mb-4">
+                <label class="block text-sm font-semibold mb-2 text-gray-300">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    class="input-field" 
+                    placeholder="user@company.com"
+                    required
+                />
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-semibold mb-2 text-gray-300">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    class="input-field" 
+                    placeholder="••••••••"
+                    required
+                />
+            </div>
+            
+            <button type="submit" class="btn-login" id="login-btn">
+                Sign In
+            </button>
+        </form>
+        
+        <div class="mt-6 text-center">
+            <p class="text-xs text-gray-500">
+                Demo Credentials:
+                <br>
+                <span class="text-gray-400">admin@erp.com / admin123</span> (Full Access)
+                <br>
+                <span class="text-gray-400">hr@erp.com / hr123</span> (HR Only)
+                <br>
+                <span class="text-gray-400">finance@erp.com / fin123</span> (Finance Only)
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // ENTERPRISE SECURITY MODEL
+        // ============================================
+        
+        // Demo user database (in production, this comes from backend API)
+        const USERS = {
+            'admin@erp.com': {
+                password: 'admin123',
+                role: 'admin',
+                permissions: ['hr.read', 'hr.write', 'finance.read', 'finance.write', 'crm.read', 'crm.write'],
+                name: 'Admin User'
+            },
+            'hr@erp.com': {
+                password: 'hr123',
+                role: 'hr_manager',
+                permissions: ['hr.read', 'hr.write'],
+                name: 'HR Manager'
+            },
+            'finance@erp.com': {
+                password: 'fin123',
+                role: 'finance_manager',
+                permissions: ['finance.read', 'finance.write'],
+                name: 'Finance Manager'
+            },
+            'viewer@erp.com': {
+                password: 'view123',
+                role: 'viewer',
+                permissions: ['hr.read', 'finance.read', 'crm.read'],
+                name: 'Read-Only User'
+            }
+        };
+        
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+        
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 5000);
+        }
+        
+        function createSession(user, email) {
+            // Create JWT-like token (in production, backend generates this)
+            const token = btoa(JSON.stringify({
+                email: email,
+                role: user.role,
+                permissions: user.permissions,
+                name: user.name,
+                exp: Date.now() + (8 * 60 * 60 * 1000) // 8 hours
+            }));
+            
+            // Store in localStorage (in production, use httpOnly cookies)
+            localStorage.setItem('erp_auth_token', token);
+            localStorage.setItem('erp_user_name', user.name);
+            localStorage.setItem('erp_user_role', user.role);
+            
+            // Set session timeout
+            setTimeout(() => {
+                logout();
+                alert('Session expired. Please log in again.');
+            }, 8 * 60 * 60 * 1000);
+        }
+        
+        function logout() {
+            localStorage.removeItem('erp_auth_token');
+            localStorage.removeItem('erp_user_name');
+            localStorage.removeItem('erp_user_role');
+            window.location.href = 'login.html';
+        }
+        
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('login-btn');
+            
+            // Disable button
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Authenticating...';
+            
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            // Authenticate
+            const user = USERS[email];
+            
+            if (!user) {
+                showError('Invalid email address');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+                return;
+            }
+            
+            if (user.password !== password) {
+                showError('Incorrect password');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+                return;
+            }
+            
+            // Success - create session
+            createSession(user, email);
+            
+            // Redirect to main app
+            window.location.href = 'index.html';
+        });
+        
+        // Check if already logged in
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('erp_auth_token');
+            if (token) {
+                try {
+                    const session = JSON.parse(atob(token));
+                    // Check if not expired
+                    if (session.exp > Date.now()) {
+                        window.location.href = 'index.html';
+                    }
+                } catch (e) {
+                    // Invalid token, stay on login page
+                }
+            }
+        });
+    </script>
+</body>
+</html>

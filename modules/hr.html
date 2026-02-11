@@ -1,106 +1,311 @@
-<div class="p-8 card">
-    <div class="content-header mb-6">
+<!-- ============================================
+     HR MODULE: EMPLOYEE RECORDS
+     CONTENT SLOT IMPLEMENTATION
+     ============================================
+     This content replaces the #dynamic-content-slot
+     in the master layout template.
+     ============================================ -->
+
+<div class="content-header">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
             <h1 class="content-title text-glow-blue">Employee Records</h1>
             <p class="content-subtitle">Manage team profiles, roles, and performance data</p>
         </div>
-        <div class="flex space-x-2">
-            <button class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10.5 3.75a.75.75 0 0 1 .75.75v8.67l3.22-3.22a.75.75 0 0 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.22 3.22V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" /><path fill-rule="evenodd" d="M3.75 12a.75.75 0 0 1 .75.75v5.515c0 1.334.818 2.545 2.054 3.068l.74.354a3.75 3.75 0 0 0 3.206.017l.74-.354c1.236-.523 2.054-1.734 2.054-3.068v-5.515a.75.75 0 0 1 1.5 0v5.515c0 1.334.818 2.545 2.054 3.068l.74.354a3.75 3.75 0 0 0 3.206-.017l.74-.354c1.236-.523 2.054-1.734 2.054-3.068V12.75a.75.75 0 0 1 1.5 0v.772a2.25 2.25 0 0 1-1.055 1.971l-.74.354a2.25 2.25 0 0 0-1.388 2.032v4.28c0 1.447-1.113 2.617-2.538 2.756l-.676.058a3.75 3.75 0 0 0-2.352.722l-.74-.354a3.75 3.75 0 0 0-3.206-.017l-.74.354a3.75 3.75 0 0 0-2.352-.722l-.676-.058c-1.425-.139-2.538-1.309-2.538-2.756v-4.28a2.25 2.25 0 0 1-1.055-1.971l-.74-.354A2.25 2.25 0 0 1 3 12.75v-0.772a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" /></svg>Export</button>
-            <button class="btn btn-primary button-glow-blue" id="add-employee-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M4.5 5.653c0-1.427.626-2.696 1.625-3.535a3.75 3.75 0 0 1 3.027-0.75H13.5a3.75 3.75 0 0 1 3.027.75c.999.839 1.625 2.108 1.625 3.535V18a3.75 3.75 0 0 1-3.027 3.535L13.5 21.75a3.75 3.75 0 0 1-3.027-.75c-.999-.839-1.625-2.108-1.625-3.535V5.653Zm4.75.75a.75.75 0 0 1 .75-.75H13.5a.75.75 0 0 1 .75.75v1.158c0 .517.369.962.875 1.079l.74.133c.456.082.93.127 1.42.127h3.456a.75.75 0 0 1 .75.75v1.634a.75.75 0 0 1-.75.75H4.5a.75.75 0 0 1-.75-.75V6.403Z" clip-rule="evenodd" /><path d="M4.875 18.75a.75.75 0 0 0 .75.75h13.5a.75.75 0 0 0 .75-.75v-1.158c0-.517-.369-.962-.875-1.079l-.74-.133a.75.75 0 0 1-.425-.515V11.75a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v4.51c0 .517.369.962.875 1.079l.74.133c.456.082.93.127 1.42.127h3.456a.75.75 0 0 0 .75-.75V18Z" /></svg>Add Employee</button>
-        </div>
+        <button class="btn btn-primary button-glow-blue">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            Add Employee
+        </button>
     </div>
+</div>
 
-    <div class="mb-6">
-        <h3 class="text-xl font-bold text-blue-400 mb-3">Employee Directory</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="hr-employee-list">
-            <!-- Employee Cards will be loaded here -->
-            <div class="card">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="flex items-center">
-                        <img src="https://via.placeholder.com/40" alt="Avatar" class="w-10 h-10 rounded-full mr-4 border-2 border-blue-500">
-                        <div>
-                            <h4 class="text-lg font-semibold text-blue-400">Sarah Anderson</h4>
-                            <p class="text-sm text-gray-400">Senior Software Engineer</p>
-                        </div>
-                    </div>
-                    <span class="status-badge active">Active</span>
-                </div>
-                <div class="mt-4 pt-4 border-t border-gray-700">
-                    <p class="text-sm text-gray-400 mb-1"><span>Department:</span> <span class="text-gray-300 utility-text">Engineering</span></p>
-                    <p class="text-sm text-gray-400 mb-1"><span>Employee ID:</span> <span class="text-gray-300 utility-text">EMP-2847</span></p>
-                    <p class="text-sm text-gray-400"><span>Location:</span> <span class="text-gray-300 utility-text">San Francisco</span></p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="flex items-center">
-                        <img src="https://via.placeholder.com/40" alt="Avatar" class="w-10 h-10 rounded-full mr-4 border-2 border-yellow-500">
-                        <div>
-                            <h4 class="text-lg font-semibold text-yellow-400">Marcus Bell</h4>
-                            <p class="text-sm text-gray-400">Product Manager</p>
-                        </div>
-                    </div>
-                    <span class="status-badge active">Active</span>
-                </div>
-                <div class="mt-4 pt-4 border-t border-gray-700">
-                    <p class="text-sm text-gray-400 mb-1"><span>Department:</span> <span class="text-gray-300 utility-text">Product</span></p>
-                    <p class="text-sm text-gray-400 mb-1"><span>Employee ID:</span> <span class="text-gray-300 utility-text">EMP-9103</span></p>
-                    <p class="text-sm text-gray-400"><span>Location:</span> <span class="text-gray-300 utility-text">New York</span></p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="flex items-center">
-                        <img src="https://via.placeholder.com/40" alt="Avatar" class="w-10 h-10 rounded-full mr-4 border-2 border-purple-500">
-                        <div>
-                            <h4 class="text-lg font-semibold text-purple-500">Jessica Chen</h4>
-                            <p class="text-sm text-gray-400">Lead UX Designer</p>
-                        </div>
-                    </div>
-                    <span class="status-badge pending">On Leave</span>
-                </div>
-                <div class="mt-4 pt-4 border-t border-gray-700">
-                    <p class="text-sm text-gray-400 mb-1"><span>Department:</span> <span class="text-gray-300 utility-text">Design</span></p>
-                    <p class="text-sm text-gray-400 mb-1"><span>Employee ID:</span> <span class="text-gray-300 utility-text">EMP-5521</span></p>
-                    <p class="text-sm text-gray-400"><span>Location:</span> <span class="text-gray-300 utility-text">London</span></p>
-                </div>
-            </div>
+<!-- Filter Bar -->
+<div class="erp-card" style="margin-bottom: 2rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div>
+            <label style="display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Department</label>
+            <select style="width: 100%; background: rgba(31, 41, 55, 0.6); border: 1px solid var(--border-primary); border-radius: 0.5rem; padding: 0.5rem; color: var(--text-primary);">
+                <option>All Departments</option>
+                <option>Engineering</option>
+                <option>Sales</option>
+                <option>Marketing</option>
+                <option>Operations</option>
+            </select>
         </div>
-    </div>
-
-    <div class="mb-6">
-        <h3 class="text-xl font-bold text-blue-400 mb-3">Performance Reviews</h3>
-        <div class="card">
-            <table class="w-full">
-                <thead>
-                    <tr>
-                        <th>Employee</th>
-                        <th>Department</th>
-                        <th>Status</th>
-                        <th>Last Review</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="flex items-center gap-2"><img src="https://via.placeholder.com/32" alt="Avatar" class="w-8 h-8 rounded-full border border-blue-500">Sarah Anderson</td>
-                        <td>Engineering</td>
-                        <td><span class="status-badge active">Active</span></td>
-                        <td>2023-12-15</td>
-                    </tr>
-                    <tr>
-                        <td class="flex items-center gap-2"><img src="https://via.placeholder.com/32" alt="Avatar" class="w-8 h-8 rounded-full border border-yellow-500">Marcus Bell</td>
-                        <td>Product</td>
-                        <td><span class="status-badge active">Active</span></td>
-                        <td>2023-11-01</td>
-                    </tr>
-                    <tr>
-                        <td class="flex items-center gap-2"><img src="https://via.placeholder.com/32" alt="Avatar" class="w-8 h-8 rounded-full border border-purple-500">Jessica Chen</td>
-                        <td>Design</td>
-                        <td><span class="status-badge pending">On Leave</span></td>
-                        <td>2023-09-20</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div>
+            <label style="display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Status</label>
+            <select style="width: 100%; background: rgba(31, 41, 55, 0.6); border: 1px solid var(--border-primary); border-radius: 0.5rem; padding: 0.5rem; color: var(--text-primary);">
+                <option>All Status</option>
+                <option>Active</option>
+                <option>On Leave</option>
+                <option>Inactive</option>
+            </select>
+        </div>
+        <div>
+            <label style="display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Location</label>
+            <select style="width: 100%; background: rgba(31, 41, 55, 0.6); border: 1px solid var(--border-primary); border-radius: 0.5rem; padding: 0.5rem; color: var(--text-primary);">
+                <option>All Locations</option>
+                <option>San Francisco</option>
+                <option>New York</option>
+                <option>London</option>
+                <option>Remote</option>
+            </select>
         </div>
     </div>
 </div>
+
+<!-- Employee Grid with Profile Cards -->
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+    
+    <!-- Employee Card 1 -->
+    <div class="erp-card">
+        <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple)); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: white; flex-shrink: 0;">
+                SA
+            </div>
+            <div style="flex: 1;">
+                <h3 style="color: var(--text-primary); font-weight: 700; margin: 0 0 0.25rem 0; font-size: 1.125rem;">Sarah Anderson</h3>
+                <p style="color: var(--primary-purple); font-size: 0.875rem; margin: 0 0 0.75rem 0; font-weight: 600;">Senior Software Engineer</p>
+                <span class="status-badge active">Active</span>
+            </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-primary);">
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Department</div>
+                <div style="color: var(--text-secondary); font-weight: 600; font-size: 0.875rem;">Engineering</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Employee ID</div>
+                <div class="utility-text" style="font-size: 0.875rem;">EMP-2847</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Location</div>
+                <div style="color: var(--text-secondary); font-weight: 600; font-size: 0.875rem;">San Francisco</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Start Date</div>
+                <div style="color: var(--text-secondary); font-weight: 600; font-size: 0.875rem;">Jan 15, 2022</div>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;">View Profile</button>
+            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;">Edit</button>
+        </div>
+    </div>
+    
+    <!-- Employee Card 2 -->
+    <div class="erp-card">
+        <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-yellow), var(--accent-violet)); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: white; flex-shrink: 0;">
+                MC
+            </div>
+            <div style="flex: 1;">
+                <h3 style="color: var(--text-primary); font-weight: 700; margin: 0 0 0.25rem 0; font-size: 1.125rem;">Marcus Chen</h3>
+                <p style="color: var(--primary-purple); font-size: 0.875rem; margin: 0 0 0.75rem 0; font-weight: 600;">Product Manager</p>
+                <span class="status-badge active">Active</span>
+            </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-primary);">
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Department</div>
+                <div style="color: var(--text-secondary); font-weight: 600; font-size: 0.875rem;">Product</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Employee ID</div>
+                <div class="utility-text" style="font-size: 0.875rem;">EMP-2891</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Location</div>
+                <div style="color: var(--text-secondary); font-weight: 600; font-size: 0.875rem;">New York</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Start Date</div>
+                <div style="color: var(--text-secondary); font-weight: 600; font-size: 0.875rem;">Mar 08, 2021</div>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;">View Profile</button>
+            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;">Edit</button>
+        </div>
+    </div>
+    
+    <!-- Employee Card 3 -->
+    <div class="erp-card">
+        <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #4ade80, var(--primary-blue)); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: white; flex-shrink: 0;">
+                EP
+            </div>
+            <div style="flex: 1;">
+                <h3 style="color: var(--text-primary); font-weight: 700; margin: 0 0 0.25rem 0; font-size: 1.125rem;">Elena Petrov</h3>
+                <p style="color: var(--primary-purple); font-size: 0.875rem; margin: 0 0 0.75rem 0; font-weight: 600;">UX Designer</p>
+                <span class="status-badge pending">On Leave</span>
+            </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-primary);">
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Department</div>
+                <div style="color: var(--text-secondary); font-weight: 600; font-size: 0.875rem;">Design</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Employee ID</div>
+                <div class="utility-text" style="font-size: 0.875rem;">EMP-2912</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Location</div>
+                <div style="color: var(--text-secondary); font-weight: 600; font-size: 0.875rem;">London</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Start Date</div>
+                <div style="color: var(--text-secondary); font-weight: 600; font-size: 0.875rem;">Jun 22, 2020</div>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;">View Profile</button>
+            <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;">Edit</button>
+        </div>
+    </div>
+</div>
+
+<!-- Data Table Section -->
+<div class="erp-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="color: var(--primary-purple); font-weight: 700; margin: 0; font-size: 1.25rem;">
+            Performance Reviews
+        </h2>
+        <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.5rem 1rem;">
+            Export CSV
+        </button>
+    </div>
+    
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--border-primary);">
+                    <th style="padding: 1rem; text-align: left; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Employee</th>
+                    <th style="padding: 1rem; text-align: left; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Department</th>
+                    <th style="padding: 1rem; text-align: left; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Review Date</th>
+                    <th style="padding: 1rem; text-align: left; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Rating</th>
+                    <th style="padding: 1rem; text-align: left; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Status</th>
+                    <th style="padding: 1rem; text-align: right; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid var(--border-primary);">
+                    <td style="padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple)); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 700; color: white;">SA</div>
+                            <div>
+                                <div style="color: var(--text-primary); font-weight: 600;">Sarah Anderson</div>
+                                <div style="color: var(--text-muted); font-size: 0.75rem;">EMP-2847</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 1rem; color: var(--text-secondary);">Engineering</td>
+                    <td style="padding: 1rem; color: var(--text-secondary);">2024-12-15</td>
+                    <td style="padding: 1rem;">
+                        <div style="display: flex; gap: 0.25rem;">
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                        </div>
+                    </td>
+                    <td style="padding: 1rem;"><span class="status-badge active">Completed</span></td>
+                    <td style="padding: 1rem; text-align: right;">
+                        <button style="background: transparent; border: none; color: var(--primary-blue); cursor: pointer; font-size: 0.875rem; font-weight: 600;">View →</button>
+                    </td>
+                </tr>
+                
+                <tr style="border-bottom: 1px solid var(--border-primary);">
+                    <td style="padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-yellow), var(--accent-violet)); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 700; color: white;">MC</div>
+                            <div>
+                                <div style="color: var(--text-primary); font-weight: 600;">Marcus Chen</div>
+                                <div style="color: var(--text-muted); font-size: 0.75rem;">EMP-2891</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 1rem; color: var(--text-secondary);">Product</td>
+                    <td style="padding: 1rem; color: var(--text-secondary);">2025-01-05</td>
+                    <td style="padding: 1rem;">
+                        <div style="display: flex; gap: 0.25rem;">
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--text-muted);">★</span>
+                        </div>
+                    </td>
+                    <td style="padding: 1rem;"><span class="status-badge pending">Pending</span></td>
+                    <td style="padding: 1rem; text-align: right;">
+                        <button style="background: transparent; border: none; color: var(--primary-blue); cursor: pointer; font-size: 0.875rem; font-weight: 600;">View →</button>
+                    </td>
+                </tr>
+                
+                <tr style="border-bottom: 1px solid var(--border-primary);">
+                    <td style="padding: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #4ade80, var(--primary-blue)); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 700; color: white;">EP</div>
+                            <div>
+                                <div style="color: var(--text-primary); font-weight: 600;">Elena Petrov</div>
+                                <div style="color: var(--text-muted); font-size: 0.75rem;">EMP-2912</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 1rem; color: var(--text-secondary);">Design</td>
+                    <td style="padding: 1rem; color: var(--text-secondary);">2024-11-20</td>
+                    <td style="padding: 1rem;">
+                        <div style="display: flex; gap: 0.25rem;">
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                            <span style="color: var(--primary-yellow);">★</span>
+                        </div>
+                    </td>
+                    <td style="padding: 1rem;"><span class="status-badge active">Completed</span></td>
+                    <td style="padding: 1rem; text-align: right;">
+                        <button style="background: transparent; border: none; color: var(--primary-blue); cursor: pointer; font-size: 0.875rem; font-weight: 600;">View →</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Pagination -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-primary);">
+        <div style="color: var(--text-muted); font-size: 0.875rem;">
+            Showing 1-3 of 47 reviews
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.875rem;">Previous</button>
+            <button class="btn btn-primary button-glow-blue" style="padding: 0.5rem 0.75rem; font-size: 0.875rem;">1</button>
+            <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.875rem;">2</button>
+            <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.875rem;">3</button>
+            <button class="btn btn-secondary" style="padding: 0.5rem 0.75rem; font-size: 0.875rem;">Next</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* HR Module Specific Styles - Extends Design System */
+    table tbody tr:hover {
+        background: rgba(59, 130, 246, 0.05);
+    }
+    
+    select:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+</style>

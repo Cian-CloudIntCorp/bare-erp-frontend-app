@@ -116,6 +116,15 @@
             padding: 2rem;
             overflow-y: auto;
         }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-primary);
+            background-color: var(--bg-darker);
+            backdrop-filter: blur(15px);
+        }
         .header-nav {
             display: flex;
             gap: 1.5rem;
@@ -123,6 +132,7 @@
         .header-nav a {
             color: var(--text-muted);
             transition: color 0.3s ease;
+            font-weight: 500;
         }
         .header-nav a:hover {
             color: var(--primary-blue);
@@ -130,6 +140,52 @@
         .header-nav a.active {
             color: var(--text-primary);
             font-weight: 600;
+        }
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        .breadcrumbs a {
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+        .breadcrumbs a:hover {
+            color: var(--primary-blue);
+        }
+        .breadcrumbs .current-page {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .global-search {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(31, 41, 55, 0.6);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            padding: 0.5rem 1rem;
+            width: 300px;
+        }
+        .global-search input {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            outline: none;
+            flex-grow: 1;
+            font-size: 0.875rem;
+        }
+        .search-icon {
+            color: var(--text-muted);
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         .section-title {
             font-size: 2.5rem;
@@ -219,7 +275,7 @@
             vertical-align: middle;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
+    @media (max-width: 768px) { .sidebar { display: none; } .header { padding: 1rem; } .global-search { width: 100%; max-width: 200px; } }</style>
 </head>
 <body class="flex h-screen overflow-hidden bg-black text-white">
 
@@ -229,20 +285,33 @@
         </div>
         <nav>
             <div class="sidebar-title">Modules</div>
-            <div id="hr-nav" class="sidebar-item" data-module="hr">HR</div>
+            <div id="hr-nav" class="sidebar-item active" data-module="hr">HR</div>
             <div id="finance-nav" class="sidebar-item" data-module="finance">Finance</div>
             <div id="crm-nav" class="sidebar-item" data-module="crm">CRM</div>
         </nav>
     </aside>
 
     <div class="flex flex-col flex-grow">
-        <header class="header flex items-center justify-between py-4 px-6 border-b border-slate-800 bg-black/50 backdrop-blur-sm">
-            <div class="header-nav">
-                <a href="#hr" data-module="hr">HR</a>
-                <a href="#finance" data-module="finance">Finance</a>
-                <a href="#crm" data-module="crm">CRM</a>
+        <header class="header">
+            <div class="breadcrumbs">
+                <a href="#" class="hover:text-blue-400">Dashboard</a>
+                <span class="mx-2 text-gray-600">/</span>
+                <span class="current-page">HR</span> <!-- This will change dynamically -->
             </div>
-            <div class="text-muted utility-text">Version 1.0</div>
+            <div class="flex items-center space-x-4">
+                <div class="global-search">
+                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.357-6.087 23.848 23.848 0 00-5.357-6.087m0 12.174l.757.587a1.75 1.75 0 002.187-1.055V10.303a1.75 1.75 0 00-2.187-1.055l-.757.587m0 12.174a23.847 23.847 0 01-5.357-6.087m0 12.174l-.757.587a1.75 1.75 0 00-2.187-1.055V10.303a1.75 1.75 0 002.187-1.055l.757-.587m0 12.174V21a2.25 2.25 0 01-4.5 0v-1.693a2.25 2.25 0 00-1.166-2.015l-.483-.322m3.375 2.554V21a2.25 2.25 0 002.25 2.25h5.25a2.25 2.25 0 002.25-2.25v-1.693a2.25 2.25 0 00-1.166-2.015l-.483-.322m3.375 2.554h-.078a2.25 2.25 0 01-1.227-3.714l.483-.322m-3.375 3.714h.078a2.25 2.25 0 001.227-3.714l-.483-.322m-3.375 3.714l-.757.587a1.75 1.75 0 00-2.187 1.055v1.693a2.25 2.25 0 002.25 2.25h5.25a2.25 2.25 0 002.25-2.25v-1.693a2.25 2.25 0 00-1.166-2.015l-.483-.322m3.375 2.554v-1.693a2.25 2.25 0 00-2.25-2.25H13.5a2.25 2.25 0 00-1.166 2.015l-.483.322m3.375-3.714h.078a2.25 2.25 0 001.227-3.714l-.483-.322m-3.375 3.714a2.25 2.25 0 01-2.25-2.25v-1.693a2.25 2.25 0 00-1.166-2.015l-.483-.322M13.5 21h5.25a2.25 2.25 0 002.25-2.25v-1.693a2.25 2.25 0 00-1.166-2.015l-.483-.322m3.375 2.554a2.25 2.25 0 01-2.25 2.25h-5.25a2.25 2.25 0 01-2.25-2.25v-1.693a2.25 2.25 0 00-1.166-2.015l-.483-.322M13.5 21h-5.25a2.25 2.25 0 01-2.25-2.25v-1.693a2.25 2.25 0 00-1.166-2.015l-.483-.322M13.5 21h-5.25a2.25 2.25 0 01-2.25-2.25v-1.693a2.25 2.25 0 00-1.166-2.015l-.483-.322" />
+                </svg>Settings</button>
+                    <button class="btn btn-secondary" id="logout-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V8.25a3.75 3.75 0 10-7.5 0v.75m4.5 7.89c-3.471.428-.742-2.986-.007-3.591s2.433-.964 3.152-1.089c.719-.123 1.498-.186 2.277-.186H15a.75.75 0 00-.75.75S13.998 17.777 14.5 18.017M12 17.25a4.5 4.5 0 01-4.5-4.5h8.25a4.5 4.5 0 01-4.5 4.5z"/></svg>
+                        Logout
+                    </button>
+                </div>
+            </div>
         </header>
 
         <main class="app-content" id="app-content">
