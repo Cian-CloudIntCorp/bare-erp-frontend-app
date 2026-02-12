@@ -1,5 +1,5 @@
 // ============================================
-// SEARCH.JS - Enterprise Global Search
+// SEARCH.JS - Enterprise Global Search (Fixed)
 // ============================================
 
 const SEARCH_DATA = [
@@ -15,16 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!input || !resultsContainer) return;
 
-    // Force styles to ensure visibility over other elements
+    // 1. Force Styles (Visibility)
     resultsContainer.style.position = 'absolute';
     resultsContainer.style.zIndex = '9999';
     resultsContainer.style.width = '100%';
-    resultsContainer.style.backgroundColor = '#0f172a'; // Match sidebar dark blue
+    resultsContainer.style.backgroundColor = '#0f172a';
     resultsContainer.style.border = '1px solid rgba(59, 130, 246, 0.3)';
     resultsContainer.style.borderRadius = '0.5rem';
     resultsContainer.style.marginTop = '0.5rem';
     resultsContainer.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.5)';
 
+    // 2. Input Listener (Typing)
     input.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase();
         
@@ -41,11 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (results.length > 0) {
             resultsContainer.style.display = 'block';
+            // Note: We use data-module attribute instead of onclick
             resultsContainer.innerHTML = results.map(item => `
-                <div class="p-3 hover:bg-blue-900/30 cursor-pointer border-b border-slate-700/50 transition-colors" 
-                     onclick="window.loadModule('${item.type}'); document.getElementById('search-results').style.display='none';">
-                    <div class="font-semibold text-gray-100">${item.title}</div>
-                    <div class="text-xs text-gray-400">${item.id} • ${item.subtitle}</div>
+                <div class="search-result-item p-3 hover:bg-blue-900/30 cursor-pointer border-b border-slate-700/50 transition-colors" 
+                     data-module="${item.type}">
+                    <div class="font-semibold text-gray-100 pointer-events-none">${item.title}</div>
+                    <div class="text-xs text-gray-400 pointer-events-none">${item.id} • ${item.subtitle}</div>
                 </div>
             `).join('');
         } else {
@@ -54,7 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Close on click outside
+    // 3. Click Listener (Navigation) - The "Bulletproof" Fix
+    resultsContainer.addEventListener('click', (e) => {
+        // Find the closest result item (bubbles up from text/divs)
+        const item = e.target.closest('.search-result-item');
+        
+        if (item) {
+            const moduleName = item.dataset.module;
+            if (window.loadModule) {
+                window.loadModule(moduleName);
+                resultsContainer.style.display = 'none';
+                input.value = ''; // Clear search
+            } else {
+                console.error("loadModule function missing!");
+            }
+        }
+    });
+
+    // 4. Close on click outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.global-search')) {
             resultsContainer.style.display = 'none';

@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Expose to window so search.js can use it
+    window.loadModule = loadModule;
+
     // --- 3. EVENT LISTENERS ---
     function handleNavigation(e, element) {
         e.preventDefault();
@@ -61,30 +64,29 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebarItems.forEach(item => item.addEventListener('click', (e) => handleNavigation(e, item)));
     headerLinks.forEach(link => link.addEventListener('click', (e) => handleNavigation(e, link)));
 
-    // --- 4. BUTTON INTERACTIONS (The Fix) ---
+    // --- 4. BUTTON INTERACTIONS ---
     document.addEventListener('click', (e) => {
-        // Find the closest button if user clicked an icon inside a button
+        // Find button even if user clicked an SVG/icon inside
         const btn = e.target.closest('button');
         if (!btn) return;
 
         const text = btn.innerText.trim();
 
-        // Logout Logic
+        // Logout
         if (btn.id === 'logout-btn' || text.includes('Logout')) {
             if(confirm('Log out of Enterprise ERP?')) window.SecurityService.logout();
             return;
         }
 
-        // Action Buttons (Mock Logic)
-        if (text.includes('Create Invoice')) alert('🧾 STARTING INVOICE WIZARD...\n\n(This would open a modal in a real app)');
-        else if (text.includes('Add Employee')) alert('👤 OPENING HR FORM...\n\n(New Employee Wizard)');
-        else if (text.includes('Add Lead')) alert('🚀 NEW LEAD ENTRY...\n\n(CRM Contact Form)'); // <--- FIXED THIS LINE
-        else if (text.includes('Export')) alert('📊 DOWNLOADING REPORT...\n\n(Generating CSV...)');
+        // Feature Mockups
+        if (text.includes('Create Invoice')) alert('🧾 STARTING INVOICE WIZARD...\n\n(Feature mock)');
+        else if (text.includes('Add Employee')) alert('👤 OPENING HR FORM...\n\n(Feature mock)');
+        else if (text.includes('Add Lead')) alert('🚀 NEW LEAD ENTRY...\n\n(Feature mock)');
+        else if (text.includes('Export')) alert('📊 DOWNLOADING REPORT...\n\n(Feature mock)');
         else if (text.includes('Settings')) alert('⚙️ OPENING SETTINGS PANEL');
-        else if (text.includes('Send Reminders')) alert('📧 SENDING EMAILS...\n\n(Reminders sent to 5 clients)');
+        else if (text.includes('Send Reminders')) alert('📧 SENDING EMAILS...\n\n(Feature mock)');
     });
 
     // --- 5. INITIAL LOAD ---
-    window.loadModule = loadModule;
     loadModule('hr');
 });
